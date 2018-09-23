@@ -1,0 +1,21 @@
+language: node_js
+node_js:
+  - '4'
+  - '5'
+  - '6'
+  - '7'
+  - '8'
+  - stable
+sudo: false
+services:
+  - mysql
+before_install:
+# use Travis CI default MySQL acount
+  - export DB_HOST=localhost
+  - export DB_USER=travis
+  - export DB_PWD=''
+# package-lock.json was introduced in npm@5
+  - if [[ `node -v` != v9* ]]; then npm install -g npm@5; fi
+  - npm install -g greenkeeper-lockfile@1
+before_script: greenkeeper-lockfile-update
+after_script: greenkeeper-lockfile-upload
